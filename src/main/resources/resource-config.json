@@ -1,0 +1,16 @@
+{
+  "resources": [
+    {
+      "pattern": "\\Qlogback.xml\\E"
+    },
+    {
+      "pattern": "\\Qapplication.yml\\E"
+    },
+    {
+      "pattern": "com/amazonaws/partitions/endpoints.json"
+    },
+    {
+      "pattern": "com/amazonaws/internal/config/awssdk_config_default.json"
+    }
+  ]
+}

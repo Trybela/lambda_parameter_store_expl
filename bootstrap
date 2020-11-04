@@ -1,0 +1,3 @@
+#!/bin/sh
+set -euo pipefail
+./lambda_parameter_store_expl -Djava.library.path=$(pwd)

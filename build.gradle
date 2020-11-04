@@ -1,0 +1,79 @@
+plugins {
+    id "com.github.johnrengelman.shadow" version "6.1.0"
+    id "io.micronaut.application" version "1.0.5"
+    id "application"
+}
+
+group = 'com.example'
+version = '0.1'
+description = 'lambda_parameter_store_expl'
+mainClassName = "com.example.ExampleLambdaRuntime"
+java.sourceCompatibility = JavaVersion.VERSION_11
+java.targetCompatibility = JavaVersion.VERSION_11
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+micronaut {
+    testRuntime "junit5"
+    runtime("lambda")
+    processing {
+        incremental true
+        annotations "com.example.*"
+    }
+}
+
+ext {
+    awssdkVersion = "2.15.0"
+    joltVersion = "0.1.1"
+    micronautVersion = "2.1.2"
+    awsLambdaEvents = "3.1.0"
+    javaxAnnotationVersion = "1.3.2"
+    lombokVersion = "1.18.12"
+    logbackVersion = "1.2.3"
+    junitJupiterVersion = "5.7.0"
+    micronautTestJunit = "2.1.1"
+}
+
+dependencies {
+    implementation "software.amazon.awssdk:protocol-core:$awssdkVersion"
+    implementation "software.amazon.awssdk:sfn:$awssdkVersion"
+    implementation "software.amazon.awssdk:sqs:$awssdkVersion"
+    implementation "com.bazaarvoice.jolt:jolt-core:$joltVersion"
+    implementation "com.bazaarvoice.jolt:json-utils:$joltVersion"
+
+    implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
+    implementation 'io.micronaut:micronaut-inject'
+    implementation 'io.micronaut:micronaut-validation'
+    implementation 'io.micronaut:micronaut-runtime'
+    implementation 'io.micronaut.aws:micronaut-aws-sdk-v2'
+    implementation 'io.micronaut.aws:micronaut-function-aws'
+    implementation "io.micronaut.aws:micronaut-function-aws-custom-runtime"
+    implementation "io.micronaut.aws:micronaut-aws-parameter-store"
+    implementation "javax.annotation:javax.annotation-api:$javaxAnnotationVersion"
+    implementation "com.amazonaws:aws-lambda-java-events:$awsLambdaEvents"
+
+
+
+    runtimeOnly "ch.qos.logback:logback-classic:$logbackVersion"
+
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    compileOnly "org.graalvm.nativeimage:svm"
+
+    testImplementation 'io.micronaut:micronaut-http-client'
+    testImplementation "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
+    testImplementation "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"
+    testImplementation "io.micronaut.test:micronaut-test-junit5:$micronautTestJunit"
+
+    annotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+    annotationProcessor "io.micronaut:micronaut-inject-java"
+    annotationProcessor "io.micronaut:micronaut-validation"
+    annotationProcessor "io.micronaut:micronaut-graal"
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
